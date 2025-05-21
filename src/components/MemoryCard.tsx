@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useState } from "react";
 import { cn } from "@/lib/utils";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -26,6 +26,8 @@ const MemoryCard: React.FC<MemoryCardProps> = ({
   prompts,
   className
 }) => {
+  const [showPrompts, setShowPrompts] = useState(false);
+  
   const icons = {
     none: <Box className="w-12 h-12 text-slate-500" />,
     local: <Archive className="w-12 h-12 text-vibe-blue" />,
@@ -45,13 +47,17 @@ const MemoryCard: React.FC<MemoryCardProps> = ({
   };
   
   return (
-    <Card className={cn(
-      "memory-card transition-all", 
-      bgColors[type], 
-      borderColors[type], 
-      "border-t-4",
-      className
-    )}>
+    <Card 
+      className={cn(
+        "memory-card transition-all relative overflow-hidden", 
+        bgColors[type], 
+        borderColors[type], 
+        "border-t-4",
+        className
+      )}
+      onMouseEnter={() => setShowPrompts(true)}
+      onMouseLeave={() => setShowPrompts(false)}
+    >
       <CardHeader>
         <div className="flex items-center justify-between">
           <CardTitle className="text-2xl font-bold">{title}</CardTitle>
@@ -79,7 +85,14 @@ const MemoryCard: React.FC<MemoryCardProps> = ({
           </ul>
         </div>
         
-        <div>
+        <div
+          className={cn(
+            "prompt-container transition-all duration-300",
+            showPrompts 
+              ? "opacity-100 translate-y-0" 
+              : "opacity-0 translate-y-8 pointer-events-none"
+          )}
+        >
           <h3 className="font-semibold text-lg mb-2">Prompts to Use</h3>
           <div className="bg-slate-100 p-3 rounded-md space-y-2">
             {prompts.map((prompt, idx) => (

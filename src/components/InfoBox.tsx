@@ -25,7 +25,7 @@ const InfoBox: React.FC<InfoBoxProps> = ({ title, children, className, icon, typ
   
   return (
     <div className={cn(
-      "rounded-lg p-4 border",
+      "rounded-lg p-4 border transition-all duration-300 hover:shadow-md",
       bgColors[type],
       className
     )}>
