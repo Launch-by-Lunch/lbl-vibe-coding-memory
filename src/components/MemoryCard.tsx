@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { cn } from "@/lib/utils";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Box, Archive, Cloud } from "lucide-react";
+import { Box, Archive, Cloud, ChevronDown, ChevronUp } from "lucide-react";
 
 type MemoryType = "none" | "local" | "cloud";
 
@@ -26,7 +26,7 @@ const MemoryCard: React.FC<MemoryCardProps> = ({
   prompts,
   className
 }) => {
-  const [showPrompts, setShowPrompts] = useState(false);
+  const [expanded, setExpanded] = useState(false);
   
   const icons = {
     none: <Box className="w-12 h-12 text-slate-500" />,
@@ -46,6 +46,10 @@ const MemoryCard: React.FC<MemoryCardProps> = ({
     cloud: "border-vibe-purple"
   };
   
+  const toggleExpand = () => {
+    setExpanded(prev => !prev);
+  };
+  
   return (
     <Card 
       className={cn(
@@ -55,8 +59,7 @@ const MemoryCard: React.FC<MemoryCardProps> = ({
         "border-t-4",
         className
       )}
-      onMouseEnter={() => setShowPrompts(true)}
-      onMouseLeave={() => setShowPrompts(false)}
+      onClick={toggleExpand}
     >
       <CardHeader>
         <div className="flex items-center justify-between">
@@ -88,9 +91,9 @@ const MemoryCard: React.FC<MemoryCardProps> = ({
         <div
           className={cn(
             "prompt-container transition-all duration-300",
-            showPrompts 
-              ? "opacity-100 translate-y-0" 
-              : "opacity-0 translate-y-8 pointer-events-none"
+            expanded 
+              ? "opacity-100 max-h-[500px]" 
+              : "opacity-0 max-h-0 overflow-hidden pointer-events-none"
           )}
         >
           <h3 className="font-semibold text-lg mb-2">Prompts to Use</h3>
@@ -104,12 +107,23 @@ const MemoryCard: React.FC<MemoryCardProps> = ({
         </div>
       </CardContent>
       
-      <CardFooter>
-        <div className="w-full text-sm text-muted-foreground">
+      <CardFooter className="flex items-center justify-between">
+        <div className="text-sm text-muted-foreground">
           {type === "none" ? "Stage 1: Build functionality first" : 
            type === "local" ? "Stage 2: Add personal memory" : 
            "Stage 3: Add shared memory"}
         </div>
+        <Button 
+          variant="ghost" 
+          size="sm" 
+          className="p-0 h-auto"
+          onClick={(e) => {
+            e.stopPropagation(); // Prevent card click from triggering
+            toggleExpand();
+          }}
+        >
+          {expanded ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+        </Button>
       </CardFooter>
     </Card>
   );

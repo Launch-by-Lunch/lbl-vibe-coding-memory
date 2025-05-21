@@ -10,9 +10,9 @@ interface ProgressionArrowProps {
 const ProgressionArrow: React.FC<ProgressionArrowProps> = ({ vertical = false, className }) => {
   if (vertical) {
     return (
-      <div className={`flex justify-center py-4 ${className}`}>
-        <div className="bg-slate-200 w-0.5 h-8"></div>
-        <ArrowRight className="transform rotate-90 text-slate-400 -mb-2 transition-all duration-300 hover:text-vibe-blue" />
+      <div className={`flex justify-center py-2 ${className}`}>
+        <div className="bg-slate-200 w-0.5 h-6"></div>
+        <ArrowRight className="transform rotate-90 text-slate-400 -mb-2 transition-all duration-300 hover:text-vibe-blue" size={16} />
       </div>
     );
   }
