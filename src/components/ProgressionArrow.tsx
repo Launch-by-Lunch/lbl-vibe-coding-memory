@@ -19,8 +19,8 @@ const ProgressionArrow: React.FC<ProgressionArrowProps> = ({ vertical = false, c
   
   return (
     <div className={`hidden md:flex items-center justify-center group ${className}`}>
-      <div className="bg-slate-200 h-0.5 w-12 transition-all duration-300 group-hover:bg-slate-300"></div>
-      <ArrowRight className="text-slate-400 transition-all duration-300 group-hover:text-vibe-blue group-hover:translate-x-1" />
+      <div className="bg-slate-200 h-0.5 w-6 transition-all duration-300 group-hover:bg-slate-300"></div>
+      <ArrowRight size={18} className="text-slate-400 transition-all duration-300 group-hover:text-vibe-blue group-hover:translate-x-1" />
     </div>
   );
 };
